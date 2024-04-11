@@ -6,7 +6,7 @@ $email = $_POST['email'];
 $tongTien = $_POST['tongTien'];
 $diaChi = $_POST['diaChi'];
 $soLuong = $_POST['soLuong'];
-// $idUser = $_POST['idUser'];
+$userId = $_POST['userId'];
 $chiTiet = $_POST['chiTiet'];
 
 // Đảm bảo rằng dữ liêu là an toàn trước khi thêm câu truy vấn
@@ -15,21 +15,21 @@ $email = mysqli_real_escape_string($conn, $email);
 $tongTien = mysqli_real_escape_string($conn, $tongTien);
 $diaChi = mysqli_real_escape_string($conn, $diaChi);
 $soLuong = mysqli_real_escape_string($conn, $soLuong);
-// $idUser = mysqli_real_escape_string($conn, $idUser);
+$userId = mysqli_real_escape_string($conn, $userId);
 
 
 // Tạo câu truy vấn INSERT
-$query = "INSERT INTO `donhang`( `diaChi`, `soLuong`, `tongTien`, `soDienThoai`, `email`) VALUES ('$diaChi','$soLuong','$tongTien','$sdt','$email')";
+// $query = "INSERT INTO `donhang`( `diaChi`, `soLuong`, `tongTien`, `soDienThoai`, `email`) VALUES ('$diaChi','$soLuong','$tongTien','$sdt','$email')";
 
-// $query = "INSERT INTO `donhang`( `idUser`, `diaChi`, `soLuong`, `tongTien`, `soDienThoai`, `email`) VALUES ('$idUser','$diaChi','$soLuong','$tongTien','$sdt','$email')";
+$query = "INSERT INTO `donhang`( `userId`, `diaChi`, `soLuong`, `tongTien`, `soDienThoai`, `email`) VALUES ('$userId','$diaChi','$soLuong','$tongTien','$sdt','$email')";
 
 
 // Thực hiện câu truy vấn
 $data = mysqli_query($conn, $query);
 if ($data) {
-	$query = "SELECT maDonHang FROM `donhang` ORDER BY maDonHang DESC LIMIT 1";
+	// $query = "SELECT maDonHang FROM `donhang` ORDER BY maDonHang DESC LIMIT 1";
 
-	// $query = "SELECT maDonHang FROM `donhang` WHERE `idUser` = '$idUser' ORDER BY maDonHang DESC LIMIT 1";
+	$query = "SELECT maDonHang FROM `donhang` WHERE `userId` = '$userId' ORDER BY maDonHang DESC LIMIT 1";
 
 	$data = mysqli_query($conn, $query);
 	while ($row = mysqli_fetch_assoc($data)) {

@@ -1,7 +1,11 @@
 <?php
 include "connect.php";
+$userId = $_POST["userId"];
 
-$query = 'SELECT * FROM `giohang`';
+// Đảm bảo truy vấn an toàn
+$userId = mysqli_real_escape_string($conn, $userId);
+
+$query = "SELECT * FROM `giohang` WHERE `userId` = $userId";
 $data = mysqli_query($conn, $query);
 $result = array();
 

@@ -1,12 +1,14 @@
 <?php 
 include "connect.php";
 $maSanPham = $_POST['maSanPham'];
+$userId = $_POST['userId'];
 
 // Đảm bảo rằng dữ liêu là an toàn trước khi thêm câu truy vấn
 $maSanPham = mysqli_real_escape_string($conn, $maSanPham);
+$userId = mysqli_real_escape_string($conn, $userId);
 
 // Tạo câu truy vấn DELETE 
-$query = "DELETE FROM `giohang` WHERE `giohang`.`maSanPham` = $maSanPham";
+$query = "DELETE FROM `giohang` WHERE `userId` = $userId AND `maSanPham` = $maSanPham";
 
 // Thực hiện câu truy vấn
 $data = mysqli_query($conn, $query);

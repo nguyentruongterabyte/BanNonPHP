@@ -3,16 +3,19 @@ include "connect.php";
 
 // Lấy dữ liệu từ request PUT
 $maSanPham = $_POST['maSanPham'];
+$userId = $_POST['userId'];
 $gia = $_POST['gia'];
 $soLuong = $_POST['soLuong'];
 
 // Đảm bảo rằng dữ liệu là an toàn trước khi thêm câu truy vấn
 $maSanPham = mysqli_real_escape_string($conn, $maSanPham);
+$userId = mysqli_real_escape_string($conn, $userId);
 $gia = mysqli_real_escape_string($conn, $gia);
 $soLuong = mysqli_real_escape_string($conn, $soLuong);
 
+
 // Tạo câu truy vấn UPDATE
-$query = "UPDATE `giohang` SET `giaSanPham` = '$gia', `soLuong` = '$soLuong' WHERE `giohang`.`maSanPham` = $maSanPham";
+$query = "UPDATE `giohang` SET `giaSanPham` = '$gia', `soLuong` = '$soLuong' WHERE `userId` = $userId AND `maSanPham` = $maSanPham";
 
 // Thực hiện câu truy vấn
 $data = mysqli_query($conn, $query);
