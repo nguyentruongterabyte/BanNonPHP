@@ -6,7 +6,7 @@ include "connect.php";
 $page = $_POST['page'];
 $total = $_POST['amount']; // cần lấy 6 sản phẩm trên 1 trang 
 $pos = ($page - 1) * $total;
-$query = 'SELECT * FROM `sanpham` LIMIT '.$pos.', '.$total.'';
+$query = 'SELECT * FROM `sanpham` WHERE `soLuong` > 0 LIMIT '.$pos.', '.$total.'';
 $data = mysqli_query($conn, $query);
 $result = array();
 

@@ -45,9 +45,12 @@ if ($data) {
 		foreach ($mangChiTiet as $key => $value) {
 			// Tạo câu truy vấn INSERT chi tiết đơn hàng
 			$query = 'INSERT INTO `chitietdonhang`(`maDonHang`, `maSanPham`, `soLuong`, `gia`) VALUES ('.$result["maDonHang"].','.$value["maSanPham"].','.$value["soLuong"].','.$value["giaSanPham"].')';
-			// echo $query;
 			$data = mysqli_query($conn, $query);
 			if ($data == true) {
+
+				// Tạo câu truy vấn UPDATE số lượng của sản phẩm có mã sản phẩm là `maSanPham`
+				$updateQuantityQuery = 'UPDATE `sanpham` SET `soLuong`=`soLuong` - '.$value["soLuong"].' WHERE maSanPham = '.$value["maSanPham"].'';
+				$data = mysqli_query($conn, $updateQuantityQuery);
 				$arr = [
 					'success' => true,
 					'message' => "Thành công",
@@ -60,6 +63,7 @@ if ($data) {
 					'maDonHang' => -1
 				];
 			}
+
 		}
 
 	}
