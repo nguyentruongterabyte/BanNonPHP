@@ -44,7 +44,7 @@ if ($data) {
 		// Lặp qua tất cả mảng chi tiết đơn hàng
 		foreach ($mangChiTiet as $key => $value) {
 			// Tạo câu truy vấn INSERT chi tiết đơn hàng
-			$query = 'INSERT INTO `chitietdonhang`(`maDonHang`, `maSanPham`, `soLuong`, `gia`) VALUES ('.$result["maDonHang"].','.$value["maSanPham"].','.$value["soLuong"].','.$value["giaSanPham"].')';
+			$query = 'INSERT INTO `chitietdonhang`(`maDonHang`, `maSanPham`, `soLuong`) VALUES ('.$result["maDonHang"].','.$value["maSanPham"].','.$value["soLuong"].')';
 			$data = mysqli_query($conn, $query);
 			if ($data == true) {
 

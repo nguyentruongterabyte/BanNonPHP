@@ -5,7 +5,7 @@ $userId = $_POST["userId"];
 // Đảm bảo truy vấn an toàn
 $userId = mysqli_real_escape_string($conn, $userId);
 
-$query = "SELECT giohang.`maSanPham`, `userId`, giohang.`tenSanPham`, giohang.`giaSanPham`, giohang.`hinhAnh`, giohang.`soLuong`, sanpham.`soLuong` AS soLuongToiDa FROM `giohang` INNER JOIN `sanpham` WHERE userId = $userId AND giohang.maSanPham = sanpham.maSanPham";
+$query = "SELECT giohang.`maSanPham`, `userId`, giohang.`tenSanPham`, giohang.`giaSanPham`, giohang.`hinhAnh`, giohang.`soLuong`, sanpham.`soLuong` AS soLuongToiDa FROM `giohang` INNER JOIN `sanpham` ON userId = $userId AND giohang.maSanPham = sanpham.maSanPham";
 $data = mysqli_query($conn, $query);
 $result = array();
 
