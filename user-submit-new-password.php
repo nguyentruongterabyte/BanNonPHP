@@ -8,8 +8,6 @@ if (isset($_POST['submit_password']) && $_POST['key'] && $_POST['reset']) {
 	// Băm mật khẩu
 	$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-
-
 	// Kiểm tra nếu tài khoản tồn tại
 	$checkEmailQuery = "SELECT * FROM `user` WHERE `email` = '$email'";
 	$checkEmailResult = mysqli_query($conn, $checkEmailQuery);

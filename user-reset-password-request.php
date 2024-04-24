@@ -26,7 +26,7 @@ if ($checkEmailResult && mysqli_num_rows($checkEmailResult) > 0) {
 	$passwordResult = $user["password"];
 
 	// Tạo link khi người dùng nhấn vào sẽ gọi api reset mật khẩu
-	$link = "http://192.168.1.5/bannon/user-reset-password.php?key=".$emailResult."&reset=".$passwordResult."";
+	$link = "http://10.252.5.172/bannon/user-reset-password.php?key=".$emailResult."&reset=".$passwordResult."";
 	// HTML email body
 $body = '
 	<!DOCTYPE html>

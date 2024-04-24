@@ -19,8 +19,6 @@ $userId = mysqli_real_escape_string($conn, $userId);
 
 
 // Tạo câu truy vấn INSERT
-// $query = "INSERT INTO `donhang`( `diaChi`, `soLuong`, `tongTien`, `soDienThoai`, `email`) VALUES ('$diaChi','$soLuong','$tongTien','$sdt','$email')";
-
 $query = "INSERT INTO `donhang`( `userId`, `diaChi`, `soLuong`, `tongTien`, `soDienThoai`, `email`) VALUES ('$userId','$diaChi','$soLuong','$tongTien','$sdt','$email')";
 
 
