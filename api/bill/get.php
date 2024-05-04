@@ -19,15 +19,17 @@ if (isset($_GET["maDonHang"])) {
                         ."FROM `chitietdonhang` AS ct INNER JOIN `sanpham` AS sp\n" 
                         ."ON ct.maSanPham = sp.maSanPham\n"
                         .'WHERE maDonHang = '.$order["maDonHang"].'';
+                        $orderDetailData = mysqli_query($conn, $orderDetailQuery);
     $items = array();
-    $orderDetailData = mysqli_query($conn, $orderDetailQuery);
-    
-    while ($rowOrderDetail = mysqli_fetch_assoc($orderDetailData)) {
-      $items[] = ($rowOrderDetail);
-    }
-
-    $order['items'] = $items;
-    
+    if ($orderDetailData) {
+                          
+      while ($rowOrderDetail = mysqli_fetch_assoc($orderDetailData)) {
+        $items[] = ($rowOrderDetail);
+      }
+  
+      $order['items'] = $items;
+      
+    } 
   }
 
   if (!empty($order)) {
