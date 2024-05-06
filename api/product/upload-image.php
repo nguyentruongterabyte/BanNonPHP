@@ -1,56 +1,90 @@
 <?php 
+ 
 header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
-header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
+header("Access-Control-Allow-Methods: POST, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // Allow the specified headers
 include "../../connect.php";
+require('C:\Users\Administrator\vendor\autoload.php');
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+
+$serviceAccountPath = '../../serviceAccountKey.json';
+// tạo một factory 
+$factory = (new Factory)
+	-> withServiceAccount($serviceAccountPath);
+	// Tạo một storage firebase từ factory 
+	$storage = $factory -> createStorage();
+	$storageBucket = $storage -> getBucket();
+
+
 $targetDir = "../../images/product/";
 
-// Nếu sản phẩm cập nhật 
-// lấy mã sản phẩm đặt tên cho file ảnh
-if (isset($_POST['maSanPham']) && $_POST['maSanPham'] != -1) {
-	$maSanPham = $_POST['maSanPham'];
-	$name = $maSanPham .".jpg";
-} else {
-	// nếu không thì select max id 
-	$query = "SELECT max(maSanPham) as id from sanpham";
-	$data = mysqli_query($conn, $query);
-	$result = array();
-	while($row = mysqli_fetch_assoc($data)) {
-		$result[] = ($row);
+// Save the download URL to your database
+$maSanPham = isset($_POST['maSanPham']) ? $_POST['maSanPham'] : -1;
+
+
+// Xóa hình ảnh cũ trong firebase
+if ($maSanPham != -1) {
+	$query = "SELECT hinhAnh FROM `sanpham` WHERE `maSanPham` = $maSanPham";
+	$result = mysqli_query($conn, $query);
+	$row = mysqli_fetch_assoc($result);
+	if ($row) {
+		// Lấy đường dẫn hình ảnh thật từ db
+		$publicUrl = $row['hinhAnh'];
+
+		// tách path thành object gồm
+		//"scheme":"https",
+	  //"host":"...",
+		//"path":"\/v0\/b\/hatshop-75393.appspot.com\/o\/663857bbe4a8e.jpg"
+		//"query":"..."}
+		$urlParts = parse_url($publicUrl);
+		
+		// Lấy phần tử path trong urlParts
+		$pathParts = explode('/', $urlParts['path']);
+		
+		// Lấy phần cuối của đường link 
+		$objectName = urldecode(end($pathParts));
+
+		$object = $storageBucket -> object($objectName);
+
+		// Kiểm tra ảnh có tồn tại trên fire base không
+		// Nếu có thì thực hiện xóa khỏi fire base 
+		if ($object -> exists()) {
+			$object -> delete();
+		}
 	}
 	
-	if ($result[0]['id'] == null) {
-		$name = 1;
-	} else {
-		$name = ++$result[0]['id'];
-	}
-	$name = $name .".jpg"; 
 }
 
-
-$targetFileName = $targetDir .$name;
-
+// Tải hình ảnh mới lên file base
 if (isset($_FILES['file'])) {
-	if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFileName)) {
+		// Tạo ra một tên duy nhất cho file để upload lên firebase
+    $filename = uniqid() . '.jpg';
+
+		$object = $storageBucket -> upload(
+			file_get_contents($_FILES["file"]["tmp_name"]), 
+			[
+				'name' => $filename
+			]
+		);
+
+		// Lấy đường link của hình ảnh
+		$downloadUrl = $object -> signedUrl(new \Datetime('+10 years'));
 		$response = [
-			'success' => true,
+			'status' => 200,
 			'message' => "Thành công",
-			'name' => $name
+			'result' => $downloadUrl 
 		];
-	} else {
-		$response = [
-			'success' => false,
-			'message' => "Thất bại"
-		];
-	}
+		
 } else {
-	$response = [
-		'success' => false,
-		'message' => "Lỗi upload ảnh"
-	];
+    $response = [
+        'status' => 400,
+        'message' => "Chưa có file"
+    ];
 }
 
 // Send JSON response
 header("Content-Type: application/json");
 echo json_encode($response);
+
 ?>

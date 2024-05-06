@@ -3,18 +3,33 @@ include '../../connect.php';
 
 $sql = "SELECT `id`, `username`, `mobile`, `email` FROM user";
 $result = mysqli_query($conn, $sql);
+$rows = array();
 
 if (!$result) {
-    die("Query failed: " . mysqli_error($conn));
+    $response = [
+        'status' => 400,
+        'message' => 'Không thể thực hiện truy vấn'
+    ];
+} else {
+    while($row = mysqli_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+    
+    if (!empty($row)) {
+        $response = [
+            'status' => 201,
+            'message' => 'Không có người dùng nào' 
+        ];
+    } else {
+        $response = [
+            'status' => 200,
+            'message' => 'Lấy danh sách người dùng thành công',
+            'result' => $rows
+        ];
+    }    
 }
-
-$rows = array();
-while($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-}
-
 header("Content-Type: application/json");
-echo json_encode($rows);
+echo json_encode($response);
 
 mysqli_close($conn);
 ?>

@@ -27,11 +27,11 @@ $data = mysqli_query($conn, $query);
 
 if ($data) {
     // Xử lý khi thêm vào giỏ hàng thành công
-    $response['success'] = true;
+    $response['status'] = 200;
     $response['message'] = "Thành công";
 } else {
     // Xử lý khi thêm vào giỏ hàng thất bại
-    $response['success'] = false;
+    $response['status'] = 400;
     $response['message'] = "Không thể thực hiện truy vấn.";
 }
 

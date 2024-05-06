@@ -25,13 +25,12 @@ if (isset($_GET["year"])) {
     $response = [
       'status' => 200, 
       'message' => 'Lấy báo cáo thành công',
-      'object' => $result
+      'result' => $result
     ];
   } else {
     $response = [
       'status' => 201,
-      'message' => 'Không có dữ liệu',
-      'object' => []
+      'message' => 'Không có dữ liệu'
     ];
   }
   header("Content-Type: application/json");

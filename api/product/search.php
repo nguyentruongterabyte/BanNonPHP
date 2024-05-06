@@ -1,4 +1,8 @@
 <?php 
+header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
+header("Access-Control-Allow-Methods: GET, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // Allow the specified headers
+
 include "../../connect.php";
 if (isset($_GET["key"])) {
 	$key = $_GET["key"];
@@ -17,14 +21,14 @@ if (isset($_GET["key"])) {
 
 	if (!empty($result)) {
 		$response = [
-			'success' => true,
-			'message' => "thành công", 
+			'status' => 200,
+			'message' => "Thành công", 
 			'result' => $result
 		];
 	} else {
 		$response = [
-			'success' => false,
-			'message' => "không thành công", 
+			'status' => 201,
+			'message' => "Không tìm thấy kết quả", 
 			'result' => $result
 		];
 	} 

@@ -1,4 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
+header("Access-Control-Allow-Methods: POST, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // Allow the specified headers
 include "../../connect.php";
 
 // Get the values from the request
@@ -28,14 +31,14 @@ $result = mysqli_query($conn, $query);
 if ($result) {
     // Query executed successfully
     $response = [
-        'success' => true,
-        'message' => 'Sanpham inserted successfully'
+        'status' => 200,
+        'message' => 'Thêm sản phẩm mới thành công'
     ];
 } else {
     // Query failed
     $response = [
-        'success' => false,
-        'message' => 'Failed to insert sanpham'
+        'status' => 400,
+        'message' => 'Thêm sản phẩm thất bại'
     ];
 }
 

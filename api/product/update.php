@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
-header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
+header("Access-Control-Allow-Methods: PUT, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // Allow the specified headers
 include "../../connect.php";
 
@@ -40,20 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     if ($result) {
         // Update successful
         $response = [
-            'success' => true,
-            'message' => 'Data updated successfully'
+            'status' => 200,
+            'message' => 'Cập nhật dữ liệu thành công'
         ];
     } else {
         // Update failed
         $response = [
-            'success' => false,
-            'message' => 'Failed to update data'
+            'status' => 400,
+            'message' => 'Cập nhật sản phẩm thất bại'
         ];
     }
 
 } else {
     $response = [
-        'success' => false,
+        'status' => 405,
         'message' => 'Invalid request method'
     ];
 }

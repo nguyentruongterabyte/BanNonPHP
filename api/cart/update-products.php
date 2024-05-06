@@ -30,19 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
         $updateResult = mysqli_query($conn, $query);
         if ($updateResult) {
-            $response['success'] = true;
+            $response['status'] = 200;
             $response['message'] = "Thành công";
         } else {
-            $response['success'] = false;
+            $response['status'] = 400;
             $response['message'] = "Không thể thực hiện được truy vấn";
         }
     } else {
-        $response['success'] = false;
+        $response['status'] = 400;
         $response['message'] = "Không thể thực hiện được truy vấn";
     }
 } else {
     $response = [
-        'success' => false,
+        'status' => 405,
         'message' => 'Invalid request method'
     ];
 }

@@ -20,7 +20,7 @@ $checkEmailResult = mysqli_query($conn, $checkEmailQuery);
 if ($checkEmailResult && mysqli_num_rows($checkEmailResult) > 0) {
 	// Nếu email đã tồn tại, trả về error response
     $arr = [
-        'success' => false,
+        'status' => 409,
         'message' => 'Email đã tồn tại'
     ];
 } else {
@@ -41,22 +41,22 @@ if ($checkEmailResult && mysqli_num_rows($checkEmailResult) > 0) {
 		if ($getUserResult && mysqli_num_rows($getUserResult) > 0) {
 			$user = mysqli_fetch_assoc($getUserResult);
 			$arr = [
-	   			'success' => true,
+	   			'status' => 200,
 	   			'message' => 'Thành công',
 	   			'result' => $user
 	   		]; 
 		} else {
 			$arr = [
-				'success' => false,
-				'message' => 'Không thể tạo được tài khoản'
+				'status' => 201,
+				'message' => 'Có lỗi xảy ra khi tạo tài khoản'
 			];
 		}
 
 	   
 	} else {
 	   $arr = [
-	   		'success' => false,
-	   		'message' => 'Không thành công'
+	   		'status' => 400,
+	   		'message' => 'Tạo tài khoản không thành công'
 	   ];
 	}
 }

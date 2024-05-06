@@ -11,14 +11,14 @@ while($row = mysqli_fetch_assoc($data)) {
 
 if (!empty($result)) {
 	$response = [
-		'success' => true,
+		'status' => 200,
 		'message' => "thành công", 
 		'result' => $result
 	];
 } else {
 	$response = [
-		'success' => false,
-		'message' => "không thành công", 
+		'status' => 201,
+		'message' => "Không có danh mục", 
 		'result' => $result
 	];
 

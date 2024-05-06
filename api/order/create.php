@@ -50,15 +50,15 @@ if ($data) {
 				$updateQuantityQuery = 'UPDATE `sanpham` SET `soLuong`=`soLuong` - '.$value["soLuong"].' WHERE maSanPham = '.$value["maSanPham"].'';
 				$data = mysqli_query($conn, $updateQuantityQuery);
 				$arr = [
-					'success' => true,
+					'status' => 200,
 					'message' => "Thành công",
-					'maDonHang' => $result["maDonHang"]
+					'result' => $result["maDonHang"]
 				];
 			} else {
 				$arr = [
-					'success' => false,
+					'status' => 400,
 					'message' => "Không thể thực hiện được truy vấn",
-					'maDonHang' => -1
+					'result' => -1
 				];
 			}
 
@@ -68,9 +68,9 @@ if ($data) {
 	
 } else {
 	$arr = [
-		'success' => false,
+		'status' => 400,
 		'message' => "Không thể thực hiện được truy vấn",
-		'maDonHang' => -1
+		'result' => -1
 	];
 }
 

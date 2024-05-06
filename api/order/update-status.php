@@ -21,20 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     if ($result) {
         // Query executed successfully
         $response = [
-            'success' => true,
-            'message' => 'Update trangThai successful'
+            'status' => 200,
+            'message' => 'Cập nhật trạng thái đơn hàng thành công'
         ];
     } else {
         // Query failed
         $response = [
-            'success' => false,
-            'message' => 'Failed to update trangThai'
+            'status' => 400,
+            'message' => 'Cập nhật trạng thái đon hàng thất bại'
         ];
     }
 
 } else {
     $response = [
-        'success' => false,
+        'status' => 405,
         'message' => 'Invalid request method'
     ];
 }

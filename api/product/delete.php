@@ -1,6 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
+header("Access-Control-Allow-Methods: DELETE, OPTIONS"); // Allow the GET, POST, and OPTIONS methods
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // Allow the specified headers
 include "../../connect.php";
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     parse_str(file_get_contents("php://input"), $_DELETE);
@@ -19,14 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     if ($result) {
         // Deletion successful
         $response = [
-            'success' => true,
-            'message' => 'Data deleted successfully'
+            'status' => 200,
+            'message' => 'Xóa dữ liệu thành công'
         ];
     } else {
         // Deletion failed
         $response = [
-            'success' => false,
-            'message' => 'Failed to delete data'
+            'status' => 409,
+            'message' => 'Sản phẩm đã có đơn mua, không thể xóa'
         ];
     }
     header("Content-Type: application/json");

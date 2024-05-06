@@ -52,7 +52,7 @@ if ($_GET['key'] && $_GET['reset']) {
                 }
                 input[type="submit"] {
                     width: 100%;
-                    padding: 10px;
+                    padding: 10px 0;
                     border: none;
                     border-radius: 5px;
                     background-color: #007bff;
@@ -66,20 +66,20 @@ if ($_GET['key'] && $_GET['reset']) {
         </head>
         <body>
             <div class="container">
-                <h2>Change Password</h2>
-                <form id="changePasswordForm" method="POST" action="user-submit-new-password.php" onsubmit="return validatePassword()">
+                <h2>Thay đổi mật khẩu</h2>
+                <form id="changePasswordForm" method="POST" action="submit-new-password.php" onsubmit="return validatePassword()">
                     <div class="form-group">
-                        <label for="password">New Password</label>
+                        <label for="password">Nhập mật khẩu mới</label>
                         <input type="password" name="password" id="password" required>
                     </div>
                     <div class="form-group">
-                        <label for="confirm_password">Retype Password</label>
+                        <label for="confirm_password">Nhập lại mật khẩu mới</label>
                         <input type="password" name="confirm_password" id="confirm_password" required>
-                        <span id="passwordError" style="color: red; display: none;">Passwords do not match!</span>
+                        <span id="passwordError" style="color: red; display: none;">Mật khẩu nhập lại không khớp!</span>
                     </div>
                     <input type="hidden" name="key" value="<?php echo $email; ?>">
                     <input type="hidden" name="reset" value="<?php echo $pass; ?>">
-                    <input type="submit" name="submit_password" value="Submit">
+                    <input type="submit" name="submit_password" value="Thay đổi mật khẩu">
                 </form>
             </div>
 

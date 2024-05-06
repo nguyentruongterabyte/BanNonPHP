@@ -12,15 +12,15 @@ if (isset($_GET["maSanPham"])) {
   $data = mysqli_query($conn, $query);
   if (!$data) {
     $response = [
-      'success' => false,
-      'message' => 'Error fetching data'
+      'status' => 400,
+      'message' => 'Không thể lấy thông tin sản phẩm'
     ];
   } else {
     $row = mysqli_fetch_assoc($data);
     $result = $row;
     $response = [
-      'success' => true,
-      'message' => 'Successfully fetched data',
+      'status' => 200,
+      'message' => 'Lấy thông tin sản phẩm thành công',
       'result' => $result
     ];
   }

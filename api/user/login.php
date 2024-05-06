@@ -21,21 +21,21 @@ if ($checkEmailResult && mysqli_num_rows($checkEmailResult) > 0) {
 		// Nếu mật khẩu khớp, trả về thông tin người dùng
 		unset($user['password']); // Remove hashed password from the response
 		$arr = [
-			'success' => true,
+			'status' => 200,
 			'message' => 'Đăng nhập thành công',
 			'result' => $user
 		];
 	} else {
 		// Nếu mật khẩu không khớp, trả về thông báo lỗi
 		$arr = [
-			'success' => false,
+			'status' => 401, // Unauthorized
 			'message' => 'Email hoặc mật khẩu không đúng'
 		];
 	}
 } else {
 	// Nếu email không tồn tại trong cơ sở dữ liệu, trả về thông báo lỗi
 	$arr = [
-		'success' => false,
+		'status' => 401,
 		'message' => 'Email hoặc mật khẩu không đúng'
 	];
 }

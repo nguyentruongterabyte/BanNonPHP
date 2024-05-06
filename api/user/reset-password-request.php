@@ -26,9 +26,9 @@ if ($checkEmailResult && mysqli_num_rows($checkEmailResult) > 0) {
 	$passwordResult = $user["password"];
 
 	// Tạo link khi người dùng nhấn vào sẽ gọi api reset mật khẩu
-	$link = "http://10.252.5.172/bannon/user-reset-password.php?key=".$emailResult."&reset=".$passwordResult."";
+	$link = $BASE_URL ."hatshop/api/user/reset-password.php?key=".$emailResult."&reset=".$passwordResult."";
 	// HTML email body
-$body = '
+	$body = '
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -69,7 +69,7 @@ $body = '
 	            padding: 10px 20px;
 	            text-decoration: none;
 	            background-color: #007bff;
-	            color: #fff;
+	            color: #fff !important;
 	            border-radius: 5px;
 	        }
 	    </style>
@@ -83,7 +83,7 @@ $body = '
 	            <p>Chào bạn,</p>
 	            <p>Bạn nhận được email này vì bạn đã yêu cầu đặt lại mật khẩu cho tài khoản của mình.</p>
 	            <p>Vui lòng nhấn vào nút bên dưới để đặt lại mật khẩu của bạn:</p>
-	            <p><a class="btn" href="'.$link .'">Đặt lại mật khẩu</a></p>
+	            <p><a class="btn" href="'.$link.'">Đặt lại mật khẩu</a></p>
 	            <p>Nếu bạn không yêu cầu thay đổi mật khẩu, vui lòng bỏ qua email này.</p>
 	        </div>
 	    </div>
@@ -108,7 +108,7 @@ $body = '
 	// Set the SMTP port for the gmail server
 	$mail -> Port = "465";
 	$mail -> From = $smtpEmail;
-	$mail -> FromName = "App bán nón";
+	$mail -> FromName = "Hat shop";
 	$mail -> AddAddress($emailResult, 'receiver_name');
 	$mail -> Subject = "Đặt lại mật khẩu";	
 	$mail -> IsHTML(true);
@@ -116,19 +116,19 @@ $body = '
 
 	if ($mail -> Send()) {
 		$arr = [
-			'success' => true,
+			'status' => 200,
 			'message' => "Vui lòng kiểm tra email của bạn để đặt mật khẩu"
 		];
 	} else {
 		$arr = [
-			'success' => false,
+			'status' => 422, // Unprocessable Entity
 			'message' => "Đã có lỗi xảy ra với gửi mail"
 		];
 	}
 
 } else {
 	$arr = [
-		'success' => false,
+		'status' => 401,
 		'message' => 'Email không tồn tại'
 	];
 }

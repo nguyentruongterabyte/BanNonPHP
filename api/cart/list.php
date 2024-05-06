@@ -18,13 +18,13 @@ if (isset($_GET["userId"])) {
 
     if (!empty($result)) {
         $arr = [
-            'success' => true,
+            'status' => 200,
             'message' => "Thành công",
             'result' => $result
         ];
     } else {
         $arr = [
-            'success' => false,
+            'status' => 201,
             'message' => "Không có dữ liệu",
             'result' => $result
         ];

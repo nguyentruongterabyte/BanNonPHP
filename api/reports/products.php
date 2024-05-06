@@ -5,25 +5,25 @@ if (isset($_GET["year"])) {
 
   $year = mysqli_real_escape_string($conn, $year);
 
-  $query = "SELECT\n"
-    . "    cdh.maSanPham,\n"
-    . "    sp.tenSanPham,\n"
-    . "    sp.soLuong AS soLuongTon,"
-    . "    sp.hinhAnh,"
-    . "    SUM(cdh.soLuong) AS tongSoLuong\n"
-    . "FROM\n"
-    . "    chitietdonhang cdh\n"
-    . "JOIN\n"
-    . "    donhang dh ON cdh.maDonHang = dh.maDonHang\n"
-    . "JOIN\n"
-    . "    sanpham sp ON cdh.maSanPham = sp.maSanPham\n"
-    . "WHERE\n"
-    . "    YEAR(dh.ngayTao) = $year\n"
-    . "GROUP BY\n"
-    . "    cdh.maSanPham\n"
-    . "ORDER BY\n"
-    . "    SUM(cdh.soLuong) DESC\n"
-    . "LIMIT 10;";
+  $query = "SELECT
+        cdh.maSanPham,
+        sp.tenSanPham,
+        sp.soLuong AS soLuongTon,
+        sp.hinhAnh,
+        SUM(cdh.soLuong) AS tongSoLuong
+    FROM
+        chitietdonhang cdh
+    JOIN
+        donhang dh ON cdh.maDonHang = dh.maDonHang
+    JOIN
+        sanpham sp ON cdh.maSanPham = sp.maSanPham
+    WHERE
+        YEAR(dh.ngayTao) = $year
+    GROUP BY
+        cdh.maSanPham
+    ORDER BY
+        SUM(cdh.soLuong) DESC
+    LIMIT 10;";
 
   $data = mysqli_query($conn, $query);
   $result = array();
@@ -36,13 +36,12 @@ if (isset($_GET["year"])) {
     $response = [
       'status' => 200,
       'message' => 'Lấy báo cáo thành công',
-      'object' => $result
+      'result' => $result
     ];
   } else {
     $response = [
       'status' => 201,
-      'message' => 'Không có dữ liệu',
-      'object' => []
+      'message' => 'Không có dữ liệu'
     ];
   }
   // Send JSON response

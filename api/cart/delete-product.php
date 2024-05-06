@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     // Check if the query was successful
     if ($data) {
         // Handle success response
-        $response['success'] = true;
+        $response['status'] = 200;
         $response['message'] = "Thành công";
     } else {
         // Handle failure response
-        $response['success'] = false;
+        $response['status'] = 400;
         $response['message'] = "Không thể thực hiện được truy vấn";
     }
 

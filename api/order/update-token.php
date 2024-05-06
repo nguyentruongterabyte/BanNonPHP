@@ -15,19 +15,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
 	if ($data) {
 		$response = [
-			'success' => true,
+			'status' => 200,
 			'message' => 'Thành công'
 		];
 	} else {
 		$response = [
-			'success' => false,
+			'status' => 400,
 			'message' => 'Không thể thực hiện được truy vấn'
 		];
 	}
 
 } else {
 	$response = [
-    'success' => false,
+    'status' => 405,
     'message' => 'Invalid request method'
   ];
 }
